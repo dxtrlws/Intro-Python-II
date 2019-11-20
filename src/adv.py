@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -36,11 +37,48 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
+print('=====================================')
+print('=====================================')
+print("Welcome to the Lambda adventure game")
+print('Directions: type "north", "south", "east" or "west" to move your character. Type "q" to quit at anytime')
+print("Before we begin, please choose a character name.")
 # Make a new player object that is currently in the 'outside' room.
+player_name = input('Please choose a name: ')
+player = Player(player_name, room['outside'])
 
 # Write a loop that:
 #
+location = ''
+while location != 'q':
+    print('=====================================')
+    print(player)
+    location = input("Please enter a direction: ")
+    try:
+        if location == 'north':
+            if hasattr(player.location, 'n_to'):
+                player.location = player.location.n_to
+            else:
+                print('You\'re not allowed to move there')
+        elif location == 'south':
+            if hasattr(player.location, 's_to'):
+                player.location = player.location.s_to
+            else:
+                print('You\'re not allowed to move there')
+        elif location == 'east':
+            if hasattr(player.location, 'e_to'):
+                player.location = player.location.e_to
+            else:
+                print('You\'re not allowed to move there')
+        elif location == 'west':
+            if hasattr(player.location, 'w_to'):
+                player.location = player.location.w_to
+            else:
+                print('You\'re not allowed to move there') 
+        else: 
+            print('Cannot travel there')
+    except ValueError:
+        print('Error, unrecognized input')   
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
